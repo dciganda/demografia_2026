@@ -1,9 +1,13 @@
-plot_fx <- function(dat, lines = FALSE, return_fx = FALSE, ...){
-  fx <- table(factor(floor(dat$edad), levels = 10:50)) / max(dat$id)
-  if(lines){
+plot_fx <- function(dat, points = FALSE, lines = FALSE, return_fx = FALSE,
+                    xlab = "Edad", ylab = "f(x)", ...){
+  n <- attr(dat, "n_cohort", exact = TRUE)
+  fx <- table(factor(floor(dat$edad), levels = 10:50)) / n
+  if(points){
+    points(10:50, fx, ...)
+  } else if(lines){
     lines(10:50, fx, ...)
   } else {
-    plot(10:50, fx, ...)
+    plot(10:50, as.vector(fx), xlab = xlab, ylab = ylab, ...)
   }
 
   if(return_fx){
